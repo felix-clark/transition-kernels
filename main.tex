@@ -1,0 +1,211 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newcommand{\intR}{\int_{\mathbb{R}}}
+
+\title{Stationary transition kernels}
+\author{Felix Michael Clark}
+\begin{document}
+\maketitle
+
+\section{Problem statement}
+Given a probability density $f(x)$, what kernels $S(x, x')$ map $f$ onto itself under the following integral transformation?
+\begin{equation}
+	\intR dx' \, f(x') S(x, x') \rightarrow f(x)
+	\label{eq:transform}
+\end{equation}
+The kernel $S(x, x')$ is meant to represent the probability that a point at
+$x'$ is mapped to a point $x$ in the transition. This means that we should also stipulate that
+\begin{equation}
+	\intR dx\,S(x, x') = 1
+	\label{eq:norm}
+\end{equation}
+for all $x'$, and $S(x, x') \geq 0$.
+
+\section{General comments}
+Clearly the delta function $S(x,x') = \delta(x - x')$ satisfies equation
+\ref{eq:transform} by its definition, for all distributions $f$. This
+corresponds to a stationary transition, wherein none of the positions move.
+If $f(x) = \delta(x-a)$ is itself the degenerate distribution, then this is the
+only solution for $S$.
+
+Another trivial case is $S(x, x') = f(x)$, which corresponds to a complete
+redistribution of all points into the final distribution. This could be seen as
+the complete opposite of the delta function case. Equation \ref{eq:norm}
+implies that this is the only separable kernel $S(x, x') = f(x) h(x')$.
+
+Equation \ref{eq:transform} can be transformed into conjugate Fourier space:
+\begin{equation}
+	\hat f(t) = \frac{1}{2\pi} \intR dt'\,\hat f(t') \hat S(t, -t')
+	% \label{eq:conj_transform}
+\end{equation}
+It also holds that $\hat S(0, t') = 2\pi\delta(t')$, which can be derived from
+expressing equation \ref{eq:norm} in conjugate space. Furthermore, the realness
+of $S(x, x')$ implies that $\hat S(-t, -t') = \hat S^*(t, t')$.
+
+Stationary transition kernels are linearly composable in that $S(x, x') = \sum_i w_i S_i(x, x')
+$ is a valid example so long as all of the $S_i$ are and $\sum_i w_i = 1$.
+
+Another general stationary transition kernel can be constructed by allowing a
+fraction $h(x')$ of points at $x'$ to be re-shuffled and re-filled evenly into
+the space they left.
+\begin{align}
+	S(x, x') & = [1-h(x')]\delta(x-x') + \frac{f(x) h(x) h(x')}{\int dy\,f(y) h(y)}                      \\
+	         & = \delta(x-x') + h(x') \left[ \frac{f(x) h(x)}{\int dy\,f(y) h(y)} - \delta(x-x') \right]
+\end{align}
+This holds for any distribution $f$ and somewhere-positive function $h$ with $0
+	\leq h(x) \leq 1$. It does not allow for any discrimination over where any of
+the moved points are re-distributed to.
+
+
+\section{Normal distribution}
+\begin{align}
+	f(x)      & = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} \\
+	\hat f(t) & = e^{i\mu t - \frac{1}{2}\sigma^2 t^2}
+	\label{eq:normal_char}
+\end{align}
+
+\subsection{A diffusive solution}
+Let $\mu = 0$ and $\sigma = 1$. The variable can always be re-scaled $x
+	\rightarrow \frac{x-\mu}{\sigma}$ to recover the general case.
+
+For a constant $0 < \gamma < 1$, the following kernel interpolates between the
+identity delta function ($\gamma = 1$) and complete re-distribution ($\gamma =
+	0$).
+\begin{equation}
+	S(x, x') = \frac{1}{\sqrt{2\pi(1-\gamma^2)}} e^{-\frac{(x-\gamma x')^2}{2(1-\gamma^2)}}
+	\label{eq:std_norm_k1}
+\end{equation}
+This a like linear attractive force with diffusion that is tuned to exactly
+counteract the typical increase in variance.
+
+\subsection{Another possibility}
+
+For a positive real function $a(t)$ such that
+$a(0) = 0$ and $a(-t) = a(t)$,\footnote{i.e. $a(t) = \mathcal{O}(t^2)$} the
+following integral representation of the transition kernel appears to work.
+\begin{equation}
+	S(x, x') = \frac{1}{2\pi} \intR dt\, \sqrt{1 + a(t)} e^{-\frac{1}{2}a(t) x'^2 + it\sqrt{1+a(t)}x' - itx}
+	% \label{eq:}
+\end{equation}
+This was derived by letting
+\[S(x, x') \propto \intR dt\, c(t) e^{-\frac{1}{2}a(t)x'^2 + b(t)x' - itx} \]
+and imposing constraints \ref{eq:transform} and \ref{eq:norm}. If $a \rightarrow 0$ the
+delta function $\delta(x-x')$ is recovered. There are almost surely more
+constraints on $a(t)$ for this to be well-defined.
+
+\section{A generalization}
+Motivated by the result in equation \ref{eq:std_norm_k1}, we might note the
+half-transformed kernel $\tilde{S}(t, x')$ can be expressed, using equation \ref{eq:normal_char},
+\begin{equation}
+	\tilde{S}(t, x') = e^{i\gamma x' t - \frac{1}{2}(1 - \gamma^2)t^2}
+\end{equation}
+This suggests a more general ansatz
+\begin{equation}
+	\tilde{S}_\gamma (t, x') = e^{i\gamma x' t} \frac{\hat{f}(t)}{\hat{f}(\gamma t)}
+\end{equation}
+for $0 \leq \gamma \leq 1$.\footnote{This expression holds even when re-introducing a mean $\mu$ and variance $\sigma^2$ into the distribution.} This appears to interpolate between the delta
+function ($\gamma = 1$) and the entire re-shuffling ($\gamma = 0$) for an
+arbitrary distribution. It is a characteristic function so long as
+$|\hat{f}(\gamma t)| \geq |\hat{f}(t)|$ which holds for continuously decreasing
+$|\hat{f}(t)|$ as $|t| \rightarrow \infty$ with $0 \leq \gamma \leq 1$.
+
+In conjugate space, this kernel is
+\begin{equation}
+	\hat{S}(t, t') = 2\pi \delta(t' + \gamma t) \frac{\hat{f}(t)}{\hat{f}(\gamma t)}
+\end{equation}
+and in coordinate space it can be expressed as follows:
+\begin{equation}
+	S_\gamma (x, x') = \frac{1}{2\pi} \intR dt\; e^{-it(x - \gamma x')} \frac{\hat{f}(t)}{\hat{f}(\gamma t)}
+	\label{eq:spread_kernel}
+\end{equation}
+This automatically satisfies equations \ref{eq:transform} and \ref{eq:norm}.
+
+Because kernels can be linearly combined, a normalized distribution over $\gamma \in [0,
+		1]$ denoted $g(\gamma)$ can compose a flexible stationary transition kernel:
+\begin{equation}
+	S_g(x, x') = \frac{1}{2\pi} \int_0^1 d\gamma\; g(\gamma) \intR dt\; e^{-it(x-\gamma x')} \frac{\hat{f}(t)}{\hat{f}(\gamma t)}
+\end{equation}
+
+I do not believe this encompasses all possibilities, but I don't know how to prove it either way.
+
+\section{Exponential distribution}
+\begin{align}
+	f(x)      & = \Theta(x) \lambda e^{-\lambda x} \\
+	\hat f(t) & = \frac{1}{1 - it/\lambda}
+\end{align}
+
+Using equation \ref{eq:spread_kernel} the following expression is derived.
+
+\begin{equation}
+	S_\gamma (x, x') =\frac{1}{2\pi} \intR dt\;e^{-it(x - \gamma x')} \frac{\gamma t + i\lambda}{t + i\lambda}
+\end{equation}
+This integrand has a simple pole at $t \rightarrow -i\lambda$, with residue
+$\frac{1}{2\pi} i \lambda (1-\gamma) e^{-\lambda(x - \gamma x')}$. With
+semi-circular contours, the integral is zero for $x < \gamma x'$ and $-2\pi i$
+times this residue for $ x > \gamma x'$. However, the integral does not
+converge for $x = \gamma x'$. This suggests an additional delta function term,
+and by normalization the result must be
+\begin{equation}
+	S_\gamma(x, x')  = \Theta(x - \gamma x') (1 - \gamma) \lambda e^{-\lambda (x - \gamma x')} + \gamma \delta(x - \gamma x')
+\end{equation}
+which represents a contraction of all points by a factor $\gamma$ followed by a
+randomization of the fraction $1-\gamma$ solely to points higher than the
+contracted location. It can be verified that this satisfies equation
+\ref{eq:transform} for the exponential distribution of width $\lambda$.
+
+
+\section*{Appendices}
+\subsection*{Gaussian integrals}
+
+\begin{align}
+	\intR dx \, e^{-\frac{A x^2}{2} + B x + C}             & = \sqrt{\frac{2\pi}{A}} e^{\frac{B^2}{2A} + C}                                               \\
+	\int_{0}^{\infty} dx \, e^{-\frac{A x^2}{2} + B x + C} & = \sqrt{\frac{\pi}{2A}} e^{\frac{B^2}{2A} + C} \mathrm{erfc}\left(\frac{B}{\sqrt{2}A}\right) \\
+\end{align}
+
+\subsection*{Characteristic functions}
+The Fourier transform of a real function $f(x)$ is given by\footnote{There is
+	some ambiguity over the sign convention; we'll take the forward FT in the
+	same direction as transforming to the CF.}
+\begin{equation}
+	\hat{f}(t) \equiv \intR dx\, f(x) e^{itx}
+	\label{eq:ft}
+\end{equation}
+If $f$ is a probability density, then $\hat{f}(t) = \left< e^{itx}
+	\right>_{f(x)}$ is called the \emph{characteristic function} of $f$. Equation \ref{eq:ft} can be inverted by
+\begin{equation}
+	f(x) = \frac{1}{2\pi} \intR dt\, \hat{f}(t) e^{-itx}
+\end{equation}
+
+The moments of $f$ can be computed by evaluating the derivatives of $\hat f (t)$ at $t=0$.
+\begin{equation}
+	\left< x^n \right>_{f(x)} = i^{-n} \hat f^{(n)}(0)
+\end{equation}
+Every characteristic function is equal to 1 at the
+origin $\hat f (0) = 1$ and is bounded
+\footnote{These are not true of Fourier transforms of arbitrary functions.}
+$|\hat f (t) | \leq 1$.
+Like all Fourier transforms of real functions, they are Hermitian: $\hat f (-t) = \hat f(t)^*$.
+
+The characteristic function can be expressed as an integral over the quantile
+function $Q(p) = F^{-1}(p)$ where $F(x) = P(x \leq x'|f(x')) = \int_{-\infty}^{x} dx'\,f(x')$ is the
+cumulative distribution function of $f(x)$.
+\begin{equation}
+	\hat f (t) = \left< e^{itx} \right> = \intR e^{itx} dF(x) = \int_0^{1} e^{itQ(p)} dp
+	% \label{eq:}
+\end{equation}
+
+%% This actually doesn't look like it works, it goes to a delta function in (x - Q)
+% This suggests guesses of the form
+% \begin{equation}
+% 	S(x, x') ~ \frac{1}{2\pi} \intR dt\, e^{-itx} \int_0^1 dp\, e^{itQ(p; x')}
+% 	% \label{eq:}
+% \end{equation}
+% where the parameters of $Q(p; x')$ are some functions of $x'$. This may often
+% be impractical, however, as quantile functions are not often conventiently
+% expressed analytically.
+
+\end{document}
