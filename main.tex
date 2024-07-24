@@ -157,6 +157,41 @@ randomization of the fraction $1-\gamma$ solely to points higher than the
 contracted location. It can be verified that this satisfies equation
 \ref{eq:transform} for the exponential distribution of width $\lambda$.
 
+\section{Gamma distribution}
+\begin{align}
+	f(x)      & = \Theta(x) \frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \\
+	\hat f(t) & = \frac{1}{(1 - it/\beta)^\alpha}
+\end{align}
+
+A similar procedure to the exponential case can be worked out, which results in
+a pole of order $k = \alpha$ for integer $\alpha$. This results in something
+that reminds the Rodrigues formula for the generalized Laguerre polynomials,
+and further manipulation suggests a power series that by inspection evaluates
+to the analytic continutation over $\alpha$ - the confluent hypergeometric
+function. We'll try to back into it using the formula\footnote{That is,
+	\begin{equation} L_n^{(\alpha)}(x) = \frac{e^x x^{-\alpha}}{n!} \frac{d^n}{dx^n}e^{-x}x^{n+\alpha}
+	\end{equation}} instead of using the power series.
+
+For $y = x - \gamma x' > 0$,
+\begin{align}
+	S(w) & \sim \frac{-2\pi i}{2\pi(k-1)!} \lim_{t \rightarrow -i\beta} \frac{\partial^{k-1}}{\partial t ^{k-1}} e^{-ity} (\gamma t + i \beta)^k                                      \\
+	     & = \frac{-i}{(k-1)! (-i)^{k-1}} \lim_{\tau \rightarrow \beta} \frac{\partial^{k-1}}{\partial \tau^{k-1}} e^{-\tau y} (\gamma \tau - \beta)^k (-i)^k                         \\
+	     & = \frac{-1}{(k-1)!}  \lim_{v \rightarrow -\beta y(1/\gamma - 1)} y^{k-1} \frac{\partial^{k-1}}{\partial v ^{k-1}} e^{-v - y\beta/\gamma} \left(\frac{\gamma v}{y}\right)^k \\
+	     & = \frac{-\gamma^k}{y (k-1)!} e^{-y\beta/\gamma} \lim_{v \rightarrow -\beta y(1/\gamma - 1)} \frac{\partial^{k-1}}{\partial v ^{k-1}} e^{-v} v^k                            \\
+	     & = \frac{-\gamma^k}{y} e^{-\beta y/\gamma} e^{\beta y(\gamma^{-1}-1)} (-\beta y)(\gamma^{-1} - 1) L_{k-1}^{(1)}\left[-\beta y(\gamma^{-1}-1)\right]                         \\
+	     & = \gamma^{k-1}(1 - \gamma) \beta e^{-\beta y} L_{k-1}^{(1)}\left[-\beta y(\gamma^{-1}-1)\right]
+\end{align}
+where at one point we use the change of variable $v = y(\tau - \beta/\gamma)$ for $\tau = v/y + \beta/\gamma$.
+
+It appears that
+\begin{equation}
+	\int_0^\infty du\, e^{-u} L_{k-1}^{(1)}[-u(\gamma^{-1} - 1)] = \Sigma_{l=0}^{k-1} \frac{1}{\gamma^l} = \frac{1-\gamma^k}{\gamma^{k-1}(1-\gamma)}
+\end{equation}
+which suggests inclusion of a delta function with weight $\gamma^k$ to normalize $S(x, x')$ over $x$:
+\begin{equation}
+	S(y) = \gamma^{k-1}(1 - \gamma) \beta \Theta(y) e^{-\beta y} L_{k-1}^{(1)}\left[-\beta y(\gamma^{-1}-1)\right] + \gamma^k \delta(y)
+\end{equation}
+where again, $y = x - \gamma x'$.
 
 \section*{Appendices}
 \subsection*{Gaussian integrals}
@@ -197,15 +232,5 @@ cumulative distribution function of $f(x)$.
 	\hat f (t) = \left< e^{itx} \right> = \intR e^{itx} dF(x) = \int_0^{1} e^{itQ(p)} dp
 	% \label{eq:}
 \end{equation}
-
-%% This actually doesn't look like it works, it goes to a delta function in (x - Q)
-% This suggests guesses of the form
-% \begin{equation}
-% 	S(x, x') ~ \frac{1}{2\pi} \intR dt\, e^{-itx} \int_0^1 dp\, e^{itQ(p; x')}
-% 	% \label{eq:}
-% \end{equation}
-% where the parameters of $Q(p; x')$ are some functions of $x'$. This may often
-% be impractical, however, as quantile functions are not often conventiently
-% expressed analytically.
 
 \end{document}
