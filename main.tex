@@ -233,4 +233,36 @@ cumulative distribution function of $f(x)$.
 	% \label{eq:}
 \end{equation}
 
+\subsection*{Laguerre polynomials}
+The generalized, or associated, Laguerre polynomials are defined by the
+Rodrigues equation or power series:
+\begin{align}
+	\label{eq:lag_rod}
+	L_n^{(\alpha)}(x) & = \frac{e^x x^{-\alpha}}{n!} \frac{d^n}{dx^n}e^{-x}x^{n+\alpha} \\
+	                  & = \sum_{m=0}^{n} \binom{n+\alpha}{n-m} \frac{(-x)^m}{m!}
+\end{align}
+The Sheffer addition formula is
+\begin{equation}
+	L_n^{(\alpha + \beta + 1)}(x+y) = \sum_{m=0}^n L_m^{(\alpha)} (x) L_{n-m}^{(\beta)}(y)
+\end{equation}
+and some recurrence relations follow.
+\begin{align}
+	L_n^{(\alpha+1)}(x) & = \sum_{m=0}^n L_{m}^{(\alpha)}(x)                                        \\
+	L_n^{(\alpha)}(x)   & = L_{n}^{(\alpha+1)}(x) - L_{n-1}^{(\alpha+1)}(x)                         \\
+	L_n^{(\alpha)}(x)   & = \sum_{m=0}^n \binom{\alpha - \beta + n - m - 1}{n-m} L_{m}^{(\beta)}(x) \\
+	                    & = \sum_{m=0}^n \binom{\alpha - \beta + n}{n-m} L_{m}^{(\beta-m)}(x)       \\
+\end{align}
+
+They are orthogonal over the gamma distribution for the corresponding value of $\alpha$.
+\begin{equation}
+	\int_0^\infty dx\, x^{\alpha-1} e^{-x} L_n^{(\alpha-1)}(x) L_{m}^{(\alpha-1)}(x) = \frac{\Gamma(n+\alpha)}{n!} \delta_{nm}
+\end{equation}
+The integral of one such polynomial over this weight is:
+\begin{equation}
+	\int_0^\infty dx\, x^{\alpha-1} e^{-x} L_n^{(\alpha')}(x) = \binom{\alpha - \alpha' + n}{n} \Gamma(\alpha')
+\end{equation}
+an indefinite integral for the standard polynomials is:
+\begin{equation}
+	\int_0^u x^{\alpha-1} e^{-x} L_n(x) = \frac{u^\alpha}{\alpha} {}_2 F_2(\alpha, n+1; 1, \alpha+1; -u)
+\end{equation}
 \end{document}
