@@ -25,7 +25,8 @@ $x'$ is mapped to a point $x$ in the transition. This means that we should also 
 \end{equation}
 for all $x'$, and $S(x, x') \geq 0$.
 
-\section{General comments}
+\section{Preliminary statements}
+\subsection{General comments}
 Clearly the delta function $S(x,x') = \delta(x - x')$ satisfies equation
 \ref{eq:transform} by its definition, for all distributions $f$. This
 corresponds to a stationary transition, wherein none of the positions move.
@@ -49,6 +50,7 @@ of $S(x, x')$ implies that $\hat S(-t, -t') = \hat S^*(t, t')$.
 Stationary transition kernels are linearly composable in that $S(x, x') = \sum_i w_i S_i(x, x')
 $ is a valid example so long as all of the $S_i$ are and $\sum_i w_i = 1$.
 
+\subsection{Reshuffled envelope}
 Another general stationary transition kernel can be constructed by allowing a
 fraction $h(x')$ of points at $x'$ to be re-shuffled and re-filled evenly into
 the space they left.
@@ -168,9 +170,8 @@ a pole of order $k = \alpha$ for integer $\alpha$. This results in something
 that reminds the Rodrigues formula for the generalized Laguerre polynomials,
 and further manipulation suggests a power series that by inspection evaluates
 to the analytic continutation over $\alpha$ - the confluent hypergeometric
-function. We'll try to back into it using the formula\footnote{That is,
-	\begin{equation} L_n^{(\alpha)}(x) = \frac{e^x x^{-\alpha}}{n!} \frac{d^n}{dx^n}e^{-x}x^{n+\alpha}
-	\end{equation}} instead of using the power series.
+function. We'll try to back into it using the formula (\ref{eq:lag_rod})
+instead of using the power series.
 
 For $y = x - \gamma x' > 0$,
 \begin{align}
