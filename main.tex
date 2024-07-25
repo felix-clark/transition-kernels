@@ -25,7 +25,7 @@ $x'$ is mapped to a point $x$ in the transition. This means that we should also 
 \end{equation}
 for all $x'$, and $S(x, x') \geq 0$.
 
-\section{Preliminary statements}
+\section{Preliminary observations}
 \subsection{General comments}
 Clearly the delta function $S(x,x') = \delta(x - x')$ satisfies equation
 \ref{eq:transform} by its definition, for all distributions $f$. This
@@ -62,6 +62,15 @@ This holds for any distribution $f$ and somewhere-positive function $h$ with $0
 	\leq h(x) \leq 1$. It does not allow for any discrimination over where any of
 the moved points are re-distributed to.
 
+\subsection{Sequentional composition}
+
+It should be straightforward to see that a stationary kernel can be built up
+from any pair, and thus more generally any sequence, of other stationary
+kernels.
+
+\begin{equation}
+	S_{ab}(x, x') = \intR dy\, S_b(x, y) S_a(y, x')
+\end{equation}
 
 \section{Normal distribution}
 \begin{align}
@@ -159,6 +168,23 @@ randomization of the fraction $1-\gamma$ solely to points higher than the
 contracted location. It can be verified that this satisfies equation
 \ref{eq:transform} for the exponential distribution of width $\lambda$.
 
+To derive a kernel that is "close" to the identity $\delta(x-x')$,
+reparameterize $\gamma \rightarrow 1 - \epsilon$ and keep only first-order
+terms in $\epsilon$.
+\begin{equation}
+	S_\epsilon(x, x') = (1-\epsilon) \delta(x - x') + \epsilon \Theta(x - x') \lambda e^{-\lambda(x-x')} + \epsilon x' \delta'(x - x')
+\end{equation}
+This demonstrates the three possibilities for a point: remain in place,
+disperse further out, or be pulled back proportionally to the coordinate and
+density change. It satisfies equations \ref{eq:transform} and \ref{eq:norm}
+exactly to 1st order in $\epsilon$, and in fact this holds true for all $0 \leq
+	\epsilon \leq 1$.\footnote{We can write $S = 1 + \epsilon T$ and note that it
+	appears that $T^2 = -T$, up to maybe some inactive terms. Then with $N$
+	applications such that $\lambda = \epsilon N$, $S \sim \left(1 + \lambda
+		T/N\right)^{N} \rightarrow e^{\lambda T} = 1 - T(e^{-\lambda}-1)$ and we
+	see how composing multiple small-$\epsilon$ kernels simply results in an
+	increase of $\epsilon$ beyond the small regime.}
+
 \section{Gamma distribution}
 \begin{align}
 	f(x)      & = \Theta(x) \frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \\
@@ -175,7 +201,7 @@ instead of using the power series.
 
 For $y = x - \gamma x' > 0$,
 \begin{align}
-	S(w) & \sim \frac{-2\pi i}{2\pi(k-1)!} \lim_{t \rightarrow -i\beta} \frac{\partial^{k-1}}{\partial t ^{k-1}} e^{-ity} (\gamma t + i \beta)^k                                      \\
+	S(y) & \sim \frac{-2\pi i}{2\pi(k-1)!} \lim_{t \rightarrow -i\beta} \frac{\partial^{k-1}}{\partial t ^{k-1}} e^{-ity} (\gamma t + i \beta)^k                                      \\
 	     & = \frac{-i}{(k-1)! (-i)^{k-1}} \lim_{\tau \rightarrow \beta} \frac{\partial^{k-1}}{\partial \tau^{k-1}} e^{-\tau y} (\gamma \tau - \beta)^k (-i)^k                         \\
 	     & = \frac{-1}{(k-1)!}  \lim_{v \rightarrow -\beta y(1/\gamma - 1)} y^{k-1} \frac{\partial^{k-1}}{\partial v ^{k-1}} e^{-v - y\beta/\gamma} \left(\frac{\gamma v}{y}\right)^k \\
 	     & = \frac{-\gamma^k}{y (k-1)!} e^{-y\beta/\gamma} \lim_{v \rightarrow -\beta y(1/\gamma - 1)} \frac{\partial^{k-1}}{\partial v ^{k-1}} e^{-v} v^k                            \\
