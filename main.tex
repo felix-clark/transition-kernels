@@ -93,6 +93,63 @@ identity delta function ($\gamma = 1$) and complete re-distribution ($\gamma =
 This a like linear attractive force with diffusion that is tuned to exactly
 counteract the typical increase in variance.
 
+\subsection{Hermite polynomials}
+
+For the Hermite polynomials defined as
+\begin{equation}
+  H_n (x) = (-1)^n e^{x^2/2} \frac{d^n}{dx^n} e^{-x^2/2}
+  \label{eq:hermite_def}
+\end{equation}
+we can leverage the orthogonality relation
+\begin{equation}
+  \int dx \, f(x) H_m(x) H_n(x) = n! \delta_{nm}
+  \label{eq:hermite_orth}
+\end{equation}
+where $f(x) = e^{-x^2/2} / \sqrt{2\pi}$ is the standardized normal distribution. Considering a kernel of the form
+\begin{equation}
+  S(x, x') = \sum_{n=0}^{\infty} s_n(x) H_n(x')
+  % \label{eq:}
+\end{equation}
+and imposing constraints \ref{eq:transform} and \ref{eq:norm}, we get
+\begin{equation}
+  S(x, x') = f(x) + \sum_{n=1}^{\infty} s_n(x) H_n(x')
+  \label{eq:hermite_kernel_f}
+\end{equation}
+where $\int dx \, s_n(x) = 0$ for all $n \geq 1$. We could generalize this in
+terms of a known kernel $S_0(x, x')$ to \begin{equation}
+  S(x, x') = S_0(x, x') + \sum_{n=1}^{\infty} s_n(x) H_n(x')
+  \label{eq:hermite_kernel}
+\end{equation}
+with the same conditions on $s_n$.
+
+\subsubsection{First-order example}
+
+Let's try to work out a simple non-trivial example with $S(x, x') = f(x) +
+s_1(x) x'$. It's tempting to first try $s_1(x) = \alpha x$ but this is not
+integrable. The obvious next step is to attempt applying an envelope that goes
+to 0 at infinity, and $f(x)$ itself is a convenient choice. So now we have
+$S(x, x') = \left( 1 + \alpha x x'\right) f(x)$, which seems to satisfy
+\ref{eq:transform} and \ref{eq:norm}.
+
+However, this function is negative-valued wherever $\alpha x x' < -1$, which
+undermines the interpretation of $S(x, x')$ as a classical probability of a
+point at $x'$ moving to $x$. Perhaps we can fix this with some manual
+intervention by clamping $s_1$:
+\begin{equation}
+ S(x, x') = \begin{cases}
+  2 f(x) &\text{ if } \alpha x x' > 1\\
+  \left(1 + \alpha x x'\right) f(x) &\text{ if } |\alpha x x'| < 1 \\
+  0 &\text{ if } \alpha x x' < -1\\
+ \end{cases} 
+  % \label{eq:}
+\end{equation}
+An alternative that's smooth and simpler to write could be to replace $\alpha x
+x'$ with an odd function of that product that has a range between -1 and 1.
+Plenty of sigmoid functions satisfy this, like $\textrm{erf}(\alpha x x')$ or
+$\tanh (\alpha x x')$.
+
+In the limit of $\alpha=0$, this reverts back to a total re-shuffling. In the limit of $\alpha \rightarrow \infty$, the left and right halves are re-shuffled separately.
+
 \subsection{Another possibility}
 
 For a positive real function $a(t)$ such that
