@@ -148,7 +148,11 @@ x'$ with an odd function of that product that has a range between -1 and 1.
 Plenty of sigmoid functions satisfy this, like $\textrm{erf}(\alpha x x')$ or
 $\tanh (\alpha x x')$.
 
-In the limit of $\alpha=0$, this reverts back to a total re-shuffling. In the limit of $\alpha \rightarrow \infty$, the left and right halves are re-shuffled separately.
+In the limit of $\alpha=0$, this reverts back to a total re-shuffling. In the
+limit of $\alpha \rightarrow \infty$, the left and right halves are re-shuffled
+separately. It doesn't look like this polynomial expansion approach naturally
+results in local\footnote{"local" meaning that $S(x, x')$ is small for large
+$|x-x'|$} kernels.
 
 \subsection{Another possibility}
 
