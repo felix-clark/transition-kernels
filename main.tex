@@ -96,6 +96,74 @@ where the positivity constraint demands $0 \leq \alpha \leq \textrm{min}(p,
 1-p) = \textrm{min}_k f_k$. This can also be written as $S_{k k'} = \delta_{k k'} +
 \frac{\alpha}{f_{k'}} \left(1 - 2\delta_{kk'}\right)$.
 
+\subsection{Discrete uniform distribution}
+This distribution over $n$ integers has value $1/n$ for each $k\in\{1, ...,
+n\}$. In general there are something like $n (n-1)/2$ degrees of freedom
+(unverified) in $S_{k k'}$. We can restrict the space to consider by imposing a
+\emph{local} constraint on $S$, which we define as $S_{k k'} = 0$ for $|k - k'|
+> 1$. It can be found that the most general local matrix $S_{k
+k'}$ can be written
+\begin{equation}
+  S = \begin{pmatrix}
+    1 - a_1 & a_1 & 0 &  & 0 & 0\\
+    a_1 & 1 - a_1 - a_2 & a_2 & \hdots & 0 & 0\\
+    0 & a_2 & 1 - a_2 - a_3 & & 0 & 0 \\
+      & \vdots & & \ddots \\
+     0 & 0 & 0 & & 1 - a_{n-2} - a_{n-1} & a_{n-1} \\
+     0 & 0 & 0 & & a_{n-1} & 1 - a_{n-1} \\
+  \end{pmatrix}
+  \label{eq:discrete_uni_trans}
+\end{equation}
+which clearly has $n-1$ degrees of freedom. This can be written in index form as
+\begin{align}
+  S_{kk'} &= \delta_{kk'}(1 - a_k - a_{k-1}) + \delta_{k-1,k'}a_{k-1} + \delta_{k+1,k'}a_k \\
+          &=  \delta_{kk'}(1 - a_{k'} - a_{k'-1}) + \delta_{k-1,k'}a_{k'} + \delta_{k+1,k'}a_{k'-1} \\
+  \label{eq:discrete_uni_trans_idx}
+\end{align}
+where $a_0 = a_n = 0$ and $a_k + a_{k+1} < 1$ for all $k$. Setting all $a_k$ equal to a single value $a$, we can write $S_1 = I + a A$ where
+\begin{equation}
+  A = \begin{pmatrix}
+    -1 & 1 & 0 &  & 0 & 0\\
+    1 & -2 & 1 & \hdots & 0 & 0\\
+    0 & 1 & -2 & & 0 & 0 \\
+      & \vdots & & \ddots \\
+     0 & 0 & 0 & & -2 & 1 \\
+     0 & 0 & 0 & & 1 & -1 \\
+  \end{pmatrix}
+  \label{eq:disc_uni_gen}
+\end{equation}
+and $a < 1/2$.
+
+We can generate a non-local kernel with successive applications of a small
+local one. Take $N$ products of $S_1$ with $a = \alpha/N$ to get
+\begin{equation}
+  S_N = S_1^N = \left(I + \frac{\alpha}{N} A \right)^N \underset{N\rightarrow\infty}{\to} \textrm{exp}\left(\alpha A\right)
+  \label{eq:disc_uni_exp}
+\end{equation}
+so $A$ generates stationary transitions on the descrete uniform distribution.
+Note that $\alpha \geq 0$ or else $S_N$ is not everywhere positive. It can be
+confirmed numerically that this $S_\infty$ is otherwise positive and tends
+towards a complete randomization as $\alpha \to \infty$. This has some
+desirable properties for physical modelling because it describes a number of
+local jumps but parameterizes to long-range motion over successive steps.
+
+There isn't a simple and obvious decomposition of the matrix exponential in
+\ref{eq:disc_uni_exp} for all $N$. In the 2D case we can find
+\begin{equation}
+  S = \frac{1}{2} \begin{pmatrix}
+    1 + e^{-2\alpha} & 1 - e^{-2\alpha} \\
+    1 - e^{-2\alpha} & 1 + e^{-2\alpha} \\
+    \end{pmatrix} = \frac{1}{2} \left[ \begin{pmatrix} 1&1\\1&1 \end{pmatrix} - e^{-2\alpha} A\right]
+  % \label{eq:}
+\end{equation}
+which makes the $S_{kk'} \to 1/n$ limit at $\alpha \to \infty$ obvious. We'll
+define the matrix $F_{kk'} = 1/n$ as the matrix that maps every input to the
+flat distribution, so $S = F - \frac{1}{2}e^{-2\alpha} A$.
+
+The $n=3$ case is somewhat tenable but it gets messy at $n \geq 4$. I suspect
+that the boundary effect might be making it more complicated than a circular
+discrete distribution would be.
+
 \section{Normal distribution}
 \begin{align}
 	f(x)      & = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} \\
