@@ -72,6 +72,30 @@ kernels.
 	S_{ab}(x, x') = \intR dy\, S_b(x, y) S_a(y, x')
 \end{equation}
 
+\section{Discrete cases}
+
+\subsection{Bernoulli distribution}
+
+The Bernoulli distribution is a two-point distribution reporting the chances of
+failure or success of an event with probability $p \in [0, 1]$. Over dependent variable $k
+\in \{0, 1\}$ the distribution vector $f_k$ is the following:
+\begin{equation}
+  f_k = \begin{pmatrix} 1-p \\ p \end{pmatrix}
+  \label{eq:bernoulli_dist}
+\end{equation}
+
+Imposing $\sum_{k} S_{k k'} = 1$, $\sum_{k'} S_{k k'} f_{k'} = f_k$, and $S_{k k'} \geq 0$ we find the following general form of $S$
+\begin{equation}
+  S_{k k'} = \begin{pmatrix}
+    1 - \frac{\alpha}{1-p} & \frac{\alpha}{p} \\
+    \frac{\alpha}{1-p} & 1 - \frac{\alpha}{p} \\
+  \end{pmatrix}
+  \label{eq:bernoulli_trans}
+\end{equation}
+where the positivity constraint demands $0 \leq \alpha \leq \textrm{min}(p,
+1-p) = \textrm{min}_k f_k$. This can also be written as $S_{k k'} = \delta_{k k'} +
+\frac{\alpha}{f_{k'}} \left(1 - 2\delta_{kk'}\right)$.
+
 \section{Normal distribution}
 \begin{align}
 	f(x)      & = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} \\
