@@ -117,7 +117,7 @@ k'}$ can be written
 which clearly has $n-1$ degrees of freedom. This can be written in index form as
 \begin{align}
   S_{kk'} &= \delta_{kk'}(1 - a_k - a_{k-1}) + \delta_{k-1,k'}a_{k-1} + \delta_{k+1,k'}a_k \\
-          &=  \delta_{kk'}(1 - a_{k'} - a_{k'-1}) + \delta_{k-1,k'}a_{k'} + \delta_{k+1,k'}a_{k'-1} \\
+          &=  \delta_{kk'}(1 - a_{k'} - a_{k'-1}) + \delta_{k-1,k'}a_{k'} + \delta_{k+1,k'}a_{k'-1}
   \label{eq:discrete_uni_trans_idx}
 \end{align}
 where $a_0 = a_n = 0$ and $a_k + a_{k+1} < 1$ for all $k$. Setting all $a_k$ equal to a single value $a$, we can write $S_1 = I + a A$ where
@@ -132,7 +132,12 @@ where $a_0 = a_n = 0$ and $a_k + a_{k+1} < 1$ for all $k$. Setting all $a_k$ equ
   \end{pmatrix}
   \label{eq:disc_uni_gen}
 \end{equation}
-and $a < 1/2$.
+and $a < 1/2$. In index form this is
+\begin{align}
+  S_{kk'} &= \delta_{kk'}\left(1 - (1 - \delta_{k0} -\delta_{kn})a\right) + \delta_{k-1,k'}a + \delta_{k+1,k'}a \\
+   &= \delta_{kk'} + a \left[-2\delta_{kk'} + \delta_{k0}\delta_{0k'} + \delta_{kn}\delta_{nk'}  + \delta_{k-1,k'} + \delta_{k+1,k'}\right]
+  \label{eq:discrete_uni_trans_idx_simp}
+\end{align}
 
 We can generate a non-local kernel with successive applications of a small
 local one. Take $N$ products of $S_1$ with $a = \alpha/N$ to get
