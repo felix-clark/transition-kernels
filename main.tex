@@ -234,10 +234,11 @@ boundaries 0 and 1:
 
 For a given $x$ value in $[0, 1]$, $y$ takes values
 \begin{equation}
-  y = (-1)^m x + m
+  y_m = (-1)^m x + m
   % \label{eq:}
 \end{equation}
-for $m \in \mathbb{Z}$. Thus we can write the full kernel as
+for $m \in \mathbb{Z}$ and spans $\mathbb{R}$. Thus we can write the full
+kernel as
 \begin{equation}
   S(x, x') = \frac{f(x)}{\sqrt{2\pi a}} \sum_{m=-\infty}^\infty \exp\left(-\frac{[(-1)^m x - x' + m]^2}{2a}\right)
   % \label{eq:}
@@ -245,7 +246,18 @@ for $m \in \mathbb{Z}$. Thus we can write the full kernel as
 where the $f(x)$ term enforces $S(x, x') = 0$ for $x \notin [0, 1]$. In
 practice this infinite sum can likely be terminated after $n$ reflections, so
 that the sum goes from $m=-n$ to $n$, for some $n \gg \sqrt{a}$. For small $a
-\ll 1$, we can probably consider a single reflection so $n=1$.
+\ll 1$, we can probably consider a single reflection $n=1$, but not $n=0$ or
+the boundary will leak.
+
+For a smooth test function $g(x)$ and small $a \ll 1$, the action of this
+kernel is
+\begin{align}
+  &\intR dx' \, S(x, x') g(x') \\
+  &= \intR dx' \, \frac{f(x)}{\sqrt{2\pi a}} \sum_{m=-\infty}^\infty \exp\left(-\frac{(y_m - x')^2}{2a}\right) g(x')\\
+  % &= \frac{f(x)}{\sqrt{2\pi a}} \sum_{m=-\infty}^\infty \intR dx' \, e^{-\frac{(x' - y_m)^2}{2a}} \left[ g(y_m) + g'(y_m) (x' - y_m) + \frac{1}{2} g''(y_m)(x' - y_m)^2 + \cdots \right]
+    &\approx f(x) \sum_{m=-\infty}^\infty \left[g(y_m) + \frac{a}{2} g''(y_m) + \mathcal{O}\left(a^2 g^{(4)}(y_m)\right)\right]
+  % \label{eq:}
+\end{align}
 
 \section{Normal distribution}
 \begin{align}
