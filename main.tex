@@ -1,8 +1,12 @@
 \documentclass{article}
+\usepackage{hyperref}
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+
+% make links blue and clickable
+\hypersetup{colorlinks=true,linkcolor=blue, linktocpage}
 
 \newcommand{\intR}{\int_{\mathbb{R}}}
 
@@ -168,6 +172,57 @@ flat distribution, so $S = F - \frac{1}{2}e^{-2\alpha} A$.
 The $n=3$ case is somewhat tenable but it gets messy at $n \geq 4$. I suspect
 that the boundary effect might be making it more complicated than a circular
 discrete distribution would be.
+
+\section{Continuous uniform distribution}
+
+\begin{align}
+  f(x) & = \begin{cases} 
+    1 & \textrm{for } 0 < x < 1 \\
+    0 & \textrm{for } x < 0 \textrm{ or } x > 1 \\
+    \frac{1}{2} & \textrm{for } x = 0 \textrm{ or } x = 1 \textrm{ (by convention)}
+  \end{cases}\\
+  \hat f(t) & = \frac{e^{it} - 1}{it}
+\end{align}
+where we accept the natural limit at $\hat f(0) = 1$. This is the standardized
+form from which all other continuous uniform distributions with different
+limits are trivially derived.
+
+% \subsection{Characteristic function solution}
+% % TODO: This section shouldn't be here before we motivate it in the normal section.
+% \begin{equation}
+%   S_\gamma(x, x') = \frac{\gamma}{2\pi} \intR dt \, e^{-it(x-\gamma x')} \frac{e^{it} - 1}{e^{i\gamma t} - 1}
+%   % \label{eq:}
+% \end{equation}
+% has simple poles at $t = 2\pi k / \gamma$, where the denominator contributes
+% $1/i\gamma$ to the residue. If we naively proceed and simply sum the residues,
+% we get:
+% \begin{align}
+%   S_\gamma(x, x') &= \sum_{k=-\infty}^{\infty} e^{-i 2\pi k \left(x/\gamma - x'\right)} \left(e^{i2\pi k / \gamma} - 1\right) \\
+%   &\approx \delta(x/\gamma - 1 - x') - \delta(x/\gamma - x')
+%   % \label{eq:}
+% \end{align}
+% using the delta function representation $\delta(x) = \frac{1}{2\pi}
+% \sum_{n=-\infty}^{\infty} e^{inx}$. This bounces to two different points,
+% usually not local, so it isn't a particularly attractive kernel.
+
+\subsection{Diffusive solution}
+Noting that the generator in equation \ref{eq:disc_uni_gen} is
+analogous to a discrete second-derivative operator, up to boundary terms.
+This suggests a kernel component like (see equation \ref{eq:exp_d2}):
+  \begin{align}
+    S &\sim \exp\left(\frac{a}{2}\frac{d^2}{dx^2}\right) \\
+    S(x, x') &= \frac{1}{\sqrt{2\pi a}} \exp\left(-\frac{(x-x')^2}{2a}\right)
+    % \label{eq:}
+  \end{align}
+which has some desirable properties but doesn't handle the boundaries properly
+on its own as it will diffuse points outside of the distribution's domain. Note
+that this is the heat kernel, so we are looking for a way to patch this up to
+operatate on the stationary solution $f(x)$ of 
+\begin{equation}
+  \frac{\partial f}{\partial t} = \frac{\partial^2 f}{\partial x ^2} 
+  \label{eq:heat}
+\end{equation}
+subject to the appropriate boundary conditions.
 
 \section{Normal distribution}
 \begin{align}
@@ -453,4 +508,35 @@ an indefinite integral for the standard polynomials is:
 \begin{equation}
 	\int_0^u x^{\alpha-1} e^{-x} L_n(x) = \frac{u^\alpha}{\alpha} {}_2 F_2(\alpha, n+1; 1, \alpha+1; -u)
 \end{equation}
+
+\subsection*{Exponentials of differential operators}
+
+The first derivative is the generator of translations, so
+\begin{equation}
+  e^{b \frac{d}{dx}} f(x) = f(x+b)
+  \label{eq:exp_d}
+\end{equation}
+With the transformation $x \to \phi(x)$ we can generalize
+(\href{https://math.stackexchange.com/questions/1465315/how-to-derive-these-lie-series-formulas}{source}):
+\begin{equation}
+  \exp\left(\frac{b}{\phi'(x)} \frac{d}{dx} f(x)\right) = f\left(\phi^{-1}\left(\phi(x)+b\right)\right)
+  \label{eq:exp_func_d}
+\end{equation}
+Note the identity provided
+\href{https://math.stackexchange.com/questions/719487/exponential-of-a-function-times-derivative}{here}
+without proof (and a typo?):
+\begin{equation}
+  \exp\left(t \phi(x) \frac{d}{dx}\right) f(x) = f\left( e^{t \phi(x) \frac{d}{dx}}x \right)
+  % \label{eq:}
+\end{equation}
+
+The exponential of a second-order derivative is a Gaussian convolution, which
+can be shown through integral methods like the characteristic function or the
+Laplace transform.
+
+\begin{equation}
+  \exp\left(\frac{a}{2} \frac{d^2}{dx^2}\right)f(x) = \frac{1}{\sqrt{2\pi a}} \intR dx' \, e^{\frac{(x-x')^2}{2a}} f(x')
+  \label{eq:exp_d2}
+\end{equation}
+
 \end{document}
