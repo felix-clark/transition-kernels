@@ -224,6 +224,29 @@ operatate on the stationary solution $f(x)$ of
 \end{equation}
 subject to the appropriate boundary conditions.
 
+Consider the triangle wave that represents a reflected $x$-coordinate at the
+boundaries 0 and 1:
+\begin{align}
+  x &\equiv \left| y - 2 \left\lfloor\frac{y+1}{2}\right\rfloor \right| &= \frac{1}{2} \left(1 + \textrm{arcsin}\left(\sin \pi y\right)\right) \\
+  \frac{dx}{dy} &= 2\left(2\lfloor y/2\rfloor - \lfloor y \rfloor\right) - 1 &= \textrm{sgn}\left(\sin \pi y\right)
+  % \label{eq:}
+\end{align}
+
+For a given $x$ value in $[0, 1]$, $y$ takes values
+\begin{equation}
+  y = (-1)^m x + m
+  % \label{eq:}
+\end{equation}
+for $m \in \mathbb{Z}$. Thus we can write the full kernel as
+\begin{equation}
+  S(x, x') = \frac{f(x)}{\sqrt{2\pi a}} \sum_{m=-\infty}^\infty \exp\left(-\frac{[(-1)^m x - x' + m]^2}{2a}\right)
+  % \label{eq:}
+\end{equation}
+where the $f(x)$ term enforces $S(x, x') = 0$ for $x \notin [0, 1]$. In
+practice this infinite sum can likely be terminated after $n$ reflections, so
+that the sum goes from $m=-n$ to $n$, for some $n \gg \sqrt{a}$. For small $a
+\ll 1$, we can probably consider a single reflection so $n=1$.
+
 \section{Normal distribution}
 \begin{align}
   f(x) &= \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} \\
