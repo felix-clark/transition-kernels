@@ -261,6 +261,28 @@ kernel is
   % \label{eq:}
 \end{align}
 
+\subsection{Application to general distribution}
+
+Since all cumulative distribution functions have a standard uniform
+distribution, we can use any kernel valid for the continuous uniform
+distribution on any distribution, given its cdf/quantile function.
+
+Denote $f_U(p)$ the standard uniform distribution on $p$, and
+$F(x) = \int^x dx'\, f(x')$ be the CDF of an arbitrary probability distrubtion
+with $Q(p) = F^{-1}(p)$ the quantile function so $x = Q(p)$ where $p = F(x) \in
+[0, 1]$. Let $S_U(p, p')$ be any kernel valid on the standard uniform
+distribution.
+
+We should have generally
+\begin{equation}
+  S(x, x') = S_U\left(F(x), F(x')\right)
+  % \label{eq:}
+\end{equation}
+where we shouldn't need to add any factors of $f(x') = dp/dx'$ since any target
+density function should satisfy $g(p) dp$ = $g(x') dx'$. Note that this type of
+kernel will have a wider dispersion at the tails than in the build since its
+spread is relative to the distribution itself.
+
 \section{Normal distribution}
 \begin{align}
   f(x) &= \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} \\
