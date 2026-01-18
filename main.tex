@@ -247,7 +247,9 @@ where the $f(x)$ term enforces $S(x, x') = 0$ for $x \notin [0, 1]$. In
 practice this infinite sum can likely be terminated after $n$ reflections, so
 that the sum goes from $m=-n$ to $n$, for some $n \gg \sqrt{a}$. For small $a
 \ll 1$, we can probably consider a single reflection $n=1$, but not $n=0$ or
-the boundary will leak.
+the boundary will leak. With this reflection construction, it actually seems
+like any symmetric convolution kernel will satisfy the conditions, not just a
+Gaussian.
 
 For a smooth test function $g(x)$ and small $a \ll 1$, the action of this
 kernel is
